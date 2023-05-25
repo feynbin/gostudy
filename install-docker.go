@@ -11,6 +11,8 @@ import (
 	"strings"
 )
 
+// 用来在centos中安装docker-ce
+
 const DOCKER_DAEMON_PATH = "/etc/docker/daemon.json"
 const DOCKER_REPO_PATH = "/etc/yum.repos.d/docker-ce.repo"
 
