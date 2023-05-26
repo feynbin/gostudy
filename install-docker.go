@@ -69,7 +69,7 @@ func main() {
 
 func repoconfig() error {
 	const DOCKER_REPO_PATH = "/etc/yum.repos.d/docker-ce.repo"
-	content := []byte("[docker-ce-stable]\nname=Docker CE Stable - $basearch\nbaseurl=https://mirrors.nju.edu.cn/docker-ce/linux/centos/$releaserver/$basearch/stable\nenabled=1\ngpgcheck=0\ngpgkey=https://mirrors.nju.edu.cn/docker-ce/linux/centos/gpg\n")
+	content := []byte("[docker-ce-stable]\nname=Docker CE Stable - $basearch\nbaseurl=https://mirrors.nju.edu.cn/docker-ce/linux/centos/9/x86_64/stable\nenabled=1\ngpgcheck=0\ngpgkey=https://mirrors.nju.edu.cn/docker-ce/linux/centos/gpg\n")
 	return ioutil.WriteFile(DOCKER_REPO_PATH, content, 0644)
 }
 
