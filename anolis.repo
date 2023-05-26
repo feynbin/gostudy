@@ -1,0 +1,96 @@
+# CentOS-Ceph-Quincy.repo
+#
+# Please see https://wiki.centos.org/SpecialInterestGroup/Storage for more
+# information
+
+[centos-ceph-quincy]
+name=CentOS-$stream - Ceph Quincy
+baseurl=https://mirrors.tuna.tsinghua.edu.cn/centos-stream/SIGs/9-stream/storage/x86_64/ceph-quincy/
+gpgcheck=0
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Storage
+
+
+# CentOS-NFV-OpenvSwitch.repo
+#
+# Please see http://wiki.centos.org/SpecialInterestGroup/NFV for more
+# information
+
+[centos-nfv-openvswitch]
+name=NFV SIG RHEL $releasever - NFV OpenvSwitch
+baseurl=https://mirrors.nju.edu.cn/centos-stream/SIGs/9/nfv/x86_64/openvswitch-common/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-NFV
+module_hotfixes=1
+
+
+# CentOS-OpenStack-zed.repo
+#
+# Please see http://wiki.centos.org/SpecialInterestGroup/Cloud for more
+# information
+
+[centos-openstack-zed]
+name=CentOS-$releasever - OpenStack zed
+baseurl=https://mirrors.nju.edu.cn/centos-stream/SIGs/9-stream/cloud/x86_64/openstack-zed/
+gpgcheck=1
+enabled=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-SIG-Cloud
+module_hotfixes=1
+
+[epel]
+name=Extra Packages for Enterprise Linux $releasever - $basearch
+# It is much more secure to use the metalink, but if you wish to use a local mirror
+# place its address here.
+baseurl=https://mirrors.nju.edu.cn/epel/9/Everything/x86_64/
+enabled=1
+gpgcheck=1
+countme=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-$releasever
+
+# rocky-extras.repo
+#
+# The mirrorlist system uses the connecting IP address of the client and the
+# update status of each mirror to pick current mirrors that are geographically
+# close to the client.  You should use this for Rocky updates unless you are
+# manually picking other mirrors.
+#
+# If the mirrorlist does not work for you, you can try the commented out
+# baseurl line instead.
+
+[extras]
+name=Rocky Linux $releasever - Extras
+baseurl=https://mirrors.nju.edu.cn/rocky/9.1/extras/x86_64/os/
+gpgcheck=1
+enabled=1
+countme=1
+metadata_expire=6h
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
+
+# rocky.repo
+#
+# The mirrorlist system uses the connecting IP address of the client and the
+# update status of each mirror to pick current mirrors that are geographically
+# close to the client.  You should use this for Rocky updates unless you are
+# manually picking other mirrors.
+#
+# If the mirrorlist does not work for you, you can try the commented out
+# baseurl line instead.
+
+[baseos]
+name=Rocky Linux $releasever - BaseOS
+baseurl=https://mirrors.nju.edu.cn/rocky/9.1/BaseOS/x86_64/os/
+gpgcheck=1
+enabled=1
+countme=1
+metadata_expire=6h
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
+
+[appstream]
+name=Rocky Linux $releasever - AppStream
+baseurl=https://mirrors.nju.edu.cn/rocky/9.1/AppStream/x86_64/os/
+gpgcheck=1
+enabled=1
+countme=1
+metadata_expire=6h
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-Rocky-9
