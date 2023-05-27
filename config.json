@@ -1,0 +1,16 @@
+{
+    "run_type": "server",
+    "local_addr": "0.0.0.0",
+    "local_port": 1443,
+    "remote_addr": "127.0.0.1",
+    "remote_port": 8000,
+    "password": [
+        "feyncode",
+        "xuyanru"
+    ],
+    "ssl": {
+        "cert": "/etc/trojan-go/cert/web.feyncode.top.crt",
+        "key": "/etc/trojan-go/cert/web.feyncode.top.key",
+        "sni": "web.feyncode.top"
+    }
+}
