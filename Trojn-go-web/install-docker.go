@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"strings"
@@ -70,7 +69,10 @@ func main() {
 func repoconfig() error {
 	const DOCKER_REPO_PATH = "/etc/yum.repos.d/docker-ce.repo"
 	content := []byte("[docker-ce-stable]\nname=Docker CE Stable - $basearch\nbaseurl=https://mirrors.nju.edu.cn/docker-ce/linux/centos/9/x86_64/stable\nenabled=1\ngpgcheck=0\ngpgkey=https://mirrors.nju.edu.cn/docker-ce/linux/centos/gpg\n")
-	return ioutil.WriteFile(DOCKER_REPO_PATH, content, 0644)
+
+	// 进行返回
+
+	return os.WriteFile(DOCKER_REPO_PATH, content, 0644)
 }
 
 func ReplaceDockerMirror() error {
@@ -79,7 +81,12 @@ func ReplaceDockerMirror() error {
 		fmt.Printf("Failed to open Docker-CE repo file: %v", err)
 		return err
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			fmt.Printf("Failed to close Docker-CE repo file: %v", err)
+		}
+	}(f)
 	newContent := ""
 	reader := bufio.NewReader(f)
 	for {
@@ -94,7 +101,7 @@ func ReplaceDockerMirror() error {
 			newContent += line + "\n"
 		}
 	}
-	if err = ioutil.WriteFile(DOCKER_REPO_PATH, []byte(newContent), 0644); err != nil {
+	if err = os.WriteFile(DOCKER_REPO_PATH, []byte(newContent), 0644); err != nil {
 		fmt.Printf("Failed to write Docker-CE repo file: %v", err)
 		return err
 	}
@@ -144,7 +151,7 @@ func ConfigureDockerMirror(mirrorURL string) error {
 	if err != nil {
 		// 文件不存在，创建一个空文件
 		if os.IsNotExist(err) {
-			if err = ioutil.WriteFile(DOCKER_DAEMON_PATH, []byte("{}"), 0644); err != nil {
+			if err = os.WriteFile(DOCKER_DAEMON_PATH, []byte("{}"), 0644); err != nil {
 				return fmt.Errorf("Failed to create Docker daemon.json file: %v", err)
 			}
 		} else {
@@ -157,7 +164,12 @@ func ConfigureDockerMirror(mirrorURL string) error {
 	if err != nil {
 		return fmt.Errorf("Failed to open Docker daemon.json file: %v", err)
 	}
-	defer f.Close()
+	defer func(f *os.File) {
+		err := f.Close()
+		if err != nil {
+			fmt.Printf("Failed to close Docker daemon.json file: %v", err)
+		}
+	}(f)
 
 	fileInfo, err := f.Stat()
 	if err != nil {
@@ -201,8 +213,14 @@ func ConfigureDockerMirror(mirrorURL string) error {
 	}
 
 	// 将新的配置写回到文件中
-	f.Truncate(0)
-	f.Seek(0, 0)
+	err = f.Truncate(0)
+	if err != nil {
+		return err
+	}
+	_, err = f.Seek(0, 0)
+	if err != nil {
+		return err
+	}
 	encoder := json.NewEncoder(f)
 	encoder.SetIndent("", "    ")
 	if err = encoder.Encode(conf); err != nil {
