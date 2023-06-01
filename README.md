@@ -1,1 +1,1 @@
-# gostudy
+# Make an effort to study Go language
